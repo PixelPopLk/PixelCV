@@ -1,0 +1,240 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="A simple CV maker for Sri Lankan students and job seekers." />
+  <title>Lanka CV Maker</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+  <style>
+    :root { --brand: #2563eb; }
+  </style>
+  <link rel="stylesheet" href="/styles.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand-wrap">
+      <div class="brand-mark">CV</div>
+      <div>
+        <div class="brand-name">Lanka CV Maker</div>
+        <div class="brand-sub">Simple. Clean. Ready to apply.</div>
+      </div>
+    </div>
+    <div class="save-state" id="saveState">Saved on this device</div>
+  </header>
+
+  <main class="app-shell">
+    <section class="intro-card">
+      <div>
+        <span class="eyebrow">BUILD YOUR CV</span>
+        <h1>Answer a few questions.<br>We’ll make the CV.</h1>
+        <p>No need to know CV formats. Pick a template, add what you have, and download the result as PDF.</p>
+      </div>
+      <div class="stepper" id="stepper">
+        <div class="step active" data-step="1"><span>1</span><small>Template</small></div>
+        <div class="line"></div>
+        <div class="step" data-step="2"><span>2</span><small>Your details</small></div>
+        <div class="line"></div>
+        <div class="step" data-step="3"><span>3</span><small>Finish</small></div>
+      </div>
+    </section>
+
+    <section class="builder-grid">
+      <aside class="panel form-panel">
+        <div class="mobile-progress" id="mobileProgress">Step 1 of 3</div>
+
+        <div class="form-step active" data-form-step="1">
+          <div class="section-head">
+            <div>
+              <h2>Choose a template</h2>
+              <p>Pick one. You can still change the color later.</p>
+            </div>
+          </div>
+
+          <div class="template-grid" id="templateGrid">
+            <button class="template-card selected" data-template="modern" type="button">
+              <div class="mini modern-mini"><div class="mini-side"></div><div class="mini-main"><b></b><i></i><i></i><i></i></div></div>
+              <strong>Modern</strong><span>Sidebar + clean layout</span>
+            </button>
+            <button class="template-card" data-template="classic" type="button">
+              <div class="mini classic-mini"><b></b><i></i><i></i><i></i><i></i></div>
+              <strong>Classic</strong><span>Traditional CV look</span>
+            </button>
+            <button class="template-card" data-template="minimal" type="button">
+              <div class="mini minimal-mini"><b></b><i></i><hr><i></i><i></i></div>
+              <strong>Minimal</strong><span>Simple and spacious</span>
+            </button>
+            <button class="template-card" data-template="student" type="button">
+              <div class="mini student-mini"><div class="mini-photo"></div><b></b><i></i><i></i><i></i></div>
+              <strong>Student</strong><span>Education + skills focus</span>
+            </button>
+          </div>
+
+          <div class="subsection">
+            <div class="section-title-row"><h3>Choose a colour</h3><span id="colorHex">#2563EB</span></div>
+            <div class="color-row">
+              <button class="color-dot active" data-color="#2563EB" style="--dot:#2563EB" aria-label="Blue"></button>
+              <button class="color-dot" data-color="#111827" style="--dot:#111827" aria-label="Black"></button>
+              <button class="color-dot" data-color="#047857" style="--dot:#047857" aria-label="Green"></button>
+              <button class="color-dot" data-color="#7C3AED" style="--dot:#7C3AED" aria-label="Purple"></button>
+              <button class="color-dot" data-color="#9F1239" style="--dot:#9F1239" aria-label="Maroon"></button>
+              <label class="custom-color"><span>Custom</span><input id="customColor" type="color" value="#2563EB" aria-label="Custom colour"></label>
+            </div>
+          </div>
+
+          <div class="subsection compact-settings">
+            <div class="section-title-row"><h3>Small appearance options</h3><span>Optional</span></div>
+            <div class="setting-grid">
+              <label><span>Border</span><select id="borderStyle"><option value="none">None</option><option value="soft" selected>Soft</option><option value="solid">Solid</option></select></label>
+              <label><span>Photo</span><select id="photoStyle"><option value="circle" selected>Circle</option><option value="square">Square</option><option value="rounded">Rounded</option></select></label>
+              <label><span>Border colour</span><input id="borderColor" type="color" value="#DCE3EF"></label>
+              <label><span>Font</span><select id="fontFamily"><option value="Inter" selected>Inter</option><option value="Arial">Arial</option><option value="Georgia">Georgia</option></select></label>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-step" data-form-step="2">
+          <div class="section-head">
+            <div>
+              <h2>Your details</h2>
+              <p>Only the basics are required. Everything else can be skipped.</p>
+            </div>
+          </div>
+
+          <div class="progress-bar"><span id="formProgressBar"></span></div>
+
+          <div class="photo-upload-row">
+            <div class="avatar-upload" id="avatarPreview"><span>+</span></div>
+            <div><h3>Add a profile photo</h3><p>Optional. A clear head-and-shoulders photo works best.</p><label class="btn light-btn">Choose photo<input id="photoInput" type="file" accept="image/png,image/jpeg,image/webp" hidden></label></div>
+          </div>
+
+          <div class="field-grid">
+            <label class="field full"><span>Full name <b>*</b></span><input id="fullName" placeholder="e.g. Nadeesha Perera" required></label>
+            <label class="field"><span>Age <b>*</b></span><input id="age" type="number" min="10" max="99" placeholder="23" required></label>
+            <label class="field"><span>Professional title</span><input id="title" placeholder="e.g. Junior Graphic Designer"></label>
+            <label class="field"><span>Email <b>*</b></span><input id="email" type="email" placeholder="name@email.com" required></label>
+            <label class="field"><span>Phone <b>*</b></span><input id="phone" placeholder="+94 7X XXX XXXX" required></label>
+            <label class="field"><span>City / Area</span><input id="location" placeholder="Colombo, Sri Lanka"></label>
+            <label class="field full"><span>Address</span><input id="address" placeholder="Street, town, district"></label>
+            <label class="field"><span>LinkedIn</span><input id="linkedin" placeholder="linkedin.com/in/username"></label>
+            <label class="field"><span>Website / Portfolio</span><input id="website" placeholder="yourportfolio.com"></label>
+          </div>
+
+          <div class="optional-box">
+            <div class="optional-head"><div><h3>More personal details</h3><p>Only add the ones you actually want on your CV.</p></div><span>Optional</span></div>
+            <div class="field-grid">
+              <label class="field"><span>Date of birth</span><input id="dob" type="date"></label>
+              <label class="field"><span>Nationality</span><input id="nationality" value="Sri Lankan"></label>
+              <label class="field"><span>Gender</span><select id="gender"><option value="">Prefer not to say</option><option>Male</option><option>Female</option><option>Other</option></select></label>
+              <label class="field"><span>Civil status</span><select id="civilStatus"><option value="">Prefer not to say</option><option>Single</option><option>Married</option></select></label>
+              <label class="field"><span>NIC</span><input id="nic" placeholder="Optional"></label>
+            </div>
+          </div>
+
+          <div class="optional-box">
+            <div class="optional-head"><div><h3>About me</h3><p>Tell us in your own words. Gemini will turn it into a CV-ready paragraph.</p></div><span>Optional</span></div>
+            <textarea id="aboutMeInput" rows="5" placeholder="Example: I am a motivated student who enjoys marketing, Canva and working with people. I helped my school society organize events and I am looking for an internship where I can learn more."></textarea>
+            <div class="ai-row"><button class="btn ai-btn" id="generateSummaryBtn" type="button">Improve my About Me</button><span id="summaryStatus"></span></div>
+            <textarea id="summary" rows="4" placeholder="Your final CV summary will appear here. You can edit it anytime."></textarea>
+          </div>
+
+          <div class="optional-box">
+            <div class="optional-head"><div><h3>Education</h3><p>Add school, institute, diploma, degree, or training.</p></div><span>Optional</span></div>
+            <div id="educationList"></div>
+            <button class="text-btn" id="addEducationBtn" type="button">+ Add education</button>
+          </div>
+
+          <div class="optional-box">
+            <div class="optional-head"><div><h3>G.C.E. Advanced Level results</h3><p>Add this section only when you want to show your results. Minimum 3 subjects.</p></div><label class="switch"><input id="includeAL" type="checkbox"><span></span></label></div>
+            <div class="exam-section hidden" id="alSection"><div id="alList"></div><button class="text-btn" id="addALBtn" type="button">+ Add A/L subject</button></div>
+          </div>
+
+          <div class="optional-box">
+            <div class="optional-head"><div><h3>G.C.E. Ordinary Level results</h3><p>Add this section only when you want to show your results. Minimum 9 subjects.</p></div><label class="switch"><input id="includeOL" type="checkbox"><span></span></label></div>
+            <div class="exam-section hidden" id="olSection"><div id="olList"></div><button class="text-btn" id="addOLBtn" type="button">+ Add O/L subject</button></div>
+          </div>
+
+          <div class="optional-box">
+            <div class="optional-head"><div><h3>Skills</h3><p>Choose the skills you want employers to notice.</p></div><span>Optional</span></div>
+            <div class="tag-input"><input id="skillInput" placeholder="Type a skill and press Enter"><div id="skillTags"></div></div>
+          </div>
+
+          <div class="optional-box">
+            <div class="optional-head"><div><h3>Work experience</h3><p>No experience? Just leave this section empty.</p></div><span>Optional</span></div>
+            <div id="experienceList"></div>
+            <button class="text-btn" id="addExperienceBtn" type="button">+ Add work experience</button>
+          </div>
+
+          <div class="optional-box">
+            <div class="optional-head"><div><h3>Other sections</h3><p>Add only what helps your application.</p></div><span>Optional</span></div>
+            <div class="chips" id="otherSectionPicker">
+              <button type="button" data-add-section="projects">+ Projects</button>
+              <button type="button" data-add-section="certifications">+ Certifications</button>
+              <button type="button" data-add-section="languages">+ Languages</button>
+              <button type="button" data-add-section="achievements">+ Achievements</button>
+              <button type="button" data-add-section="references">+ References</button>
+              <button type="button" data-add-section="interests">+ Interests</button>
+            </div>
+            <div id="otherSections"></div>
+          </div>
+        </div>
+
+        <div class="form-step" data-form-step="3">
+          <div class="finish-card">
+            <div class="finish-icon">✓</div>
+            <span class="eyebrow">YOUR CV IS READY</span>
+            <h2>Check the preview, then download it.</h2>
+            <p>You can go back and change any answer. Your CV stays on this device unless you download it.</p>
+            <div class="finish-actions"><button class="btn light-btn" id="backToDetailsBtn" type="button">Edit details</button><button class="btn primary-btn" id="downloadBtn" type="button">Download PDF</button></div>
+          </div>
+        </div>
+
+        <div class="nav-actions">
+          <button class="btn light-btn" id="backBtn" type="button" hidden>Back</button>
+          <button class="btn primary-btn" id="nextBtn" type="button">Continue</button>
+        </div>
+      </aside>
+
+      <section class="panel preview-panel">
+        <div class="preview-head"><div><span class="eyebrow">LIVE PREVIEW</span><h2 id="previewTitle">Modern CV</h2></div><span class="preview-note">A4 PDF</span></div>
+        <div class="preview-stage" id="previewStage">
+          <article id="cvPaper" class="cv-paper template-modern">
+            <div class="cv-sidebar">
+              <div id="cvPhotoWrap" class="cv-photo circle"><img id="cvPhoto" alt="Profile photo"></div>
+              <div class="cv-sidebar-content">
+                <div class="cv-block" id="contactBlock"><h4>CONTACT</h4><div id="cvContact"></div></div>
+                <div class="cv-block" id="skillsBlock"><h4>SKILLS</h4><div id="cvSkills"></div></div>
+                <div class="cv-block" id="languagesBlock" hidden><h4>LANGUAGES</h4><div id="cvLanguagesSide"></div></div>
+                <div class="cv-block" id="refsBlockSide" hidden><h4>REFERENCE</h4><div id="cvReferencesSide"></div></div>
+              </div>
+            </div>
+            <div class="cv-main">
+              <header class="cv-header">
+                <div><div class="cv-name" id="cvName">YOUR NAME</div><div class="cv-title" id="cvTitle">Professional Title</div></div>
+              </header>
+              <div class="cv-body">
+                <section class="cv-section" id="summarySection" hidden><div class="cv-section-title">PROFILE</div><p id="cvSummary"></p></section>
+                <section class="cv-section" id="experienceSection" hidden><div class="cv-section-title">WORK EXPERIENCE</div><div id="cvExperience"></div></section>
+                <section class="cv-section" id="educationSection" hidden><div class="cv-section-title">EDUCATION</div><div id="cvEducation"></div></section>
+                <section class="cv-section exam-cv-section" id="alCvSection" hidden><div class="cv-section-title">G.C.E. ADVANCED LEVEL</div><div id="cvAL"></div><div class="grade-chart" id="cvALChart"></div></section>
+                <section class="cv-section exam-cv-section" id="olCvSection" hidden><div class="cv-section-title">G.C.E. ORDINARY LEVEL</div><div id="cvOL"></div><div class="grade-chart" id="cvOLChart"></div></section>
+                <section class="cv-section" id="projectsSection" hidden><div class="cv-section-title">PROJECTS</div><div id="cvProjects"></div></section>
+                <section class="cv-section" id="certificationsSection" hidden><div class="cv-section-title">CERTIFICATIONS</div><div id="cvCertifications"></div></section>
+                <section class="cv-section" id="achievementsSection" hidden><div class="cv-section-title">ACHIEVEMENTS</div><div id="cvAchievements"></div></section>
+                <section class="cv-section" id="interestsSection" hidden><div class="cv-section-title">INTERESTS</div><div id="cvInterests"></div></section>
+              </div>
+            </div>
+          </article>
+        </div>
+      </section>
+    </section>
+  </main>
+
+  <div class="toast" id="toast"></div>
+
+  <script src="https://cdn.jsdelivr.net/npm/html2pdf.js@0.10.1/dist/html2pdf.bundle.min.js"></script>
+  <script src="/app.js"></script>
+</body>
+</html>
