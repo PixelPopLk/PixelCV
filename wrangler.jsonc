@@ -1,0 +1,17 @@
+{
+  "$schema": "./node_modules/wrangler/config-schema.json",
+  "name": "lanka-cv-maker",
+  "main": "src/index.js",
+  "compatibility_date": "2026-09-25",
+  "assets": {
+    "directory": "./public",
+    "binding": "ASSETS",
+    "run_worker_first": ["/api/*"]
+  },
+  "secrets": {
+    "required": ["GEMINI_API_KEY"]
+  },
+  "vars": {
+    "GEMINI_MODEL": "gemini-3.5-flash-lite"
+  }
+}
